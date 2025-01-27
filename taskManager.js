@@ -1,25 +1,24 @@
 let tasks=[];
 
 const loadTasks = () => {
-  const tasksJSON = localStorage.getItem('tasks');
+  const tasksJSON = localStorage.getItem('tasks');//value retrive from localStorage by key-(tasks)
 
-  // Check if the retrieved value is valid JSON
-  if (tasksJSON) {
+  if (tasksJSON) { //here we check the retrieved value is valid JSON
     try {
-      tasks = JSON.parse(tasksJSON); // Parse the JSON string to an object
+      tasks = JSON.parse(tasksJSON); // here we try to convert JSON string to an object and store in tasks array
     } catch (error) {
       console.error("Error parsing tasks JSON:", error);
       tasks = []; // Fallback to an empty array if parsing fails
     }
   } else {
-    tasks = []; // Initialize as empty array if no tasks are stored
+    tasks = []; // Initialize as empty array if no tasks are stored in local storage
   }
 };
 
 
 const saveTasks = () => {
   try {
-    localStorage.setItem('tasks', JSON.stringify(tasks)); // Convert to JSON string
+    localStorage.setItem('tasks', JSON.stringify(tasks)); // here we try to Convert tasks array elements into JSON string and save them in localStorage
   } catch (error) {
     console.error("Error saving tasks to localStorage:", error);
   }
