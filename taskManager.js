@@ -30,7 +30,7 @@ const addTask = (title, description, priority) => {
   const dueDate = document.getElementById('taskDueDate').value;
 
   const newTask = {
-    id: Date.now(),
+    id: Date.now(),// we use this for unique ID
     title,
     description,
     priority,
@@ -52,7 +52,7 @@ taskForm.addEventListener('submit', (e) => {
   const description = document.getElementById('taskDescription').value.trim();
   const priority = document.getElementById('taskPriority').value;
 
-  if (title && description) {
+  if (title && description) { //here we check title and destription fill or not
     addTask(title, description, priority);
 
     // Reset form fields
@@ -125,6 +125,7 @@ const updates=(taskIndex)=>{
   const description = document.getElementById('taskDescription').value.trim();
   const priority = document.getElementById('taskPriority').value;
 
+  if(dueDate&&title&&description){ // here checking all info for update set or not
       tasks[taskIndex].dueDate=dueDate;
       tasks[taskIndex].title=title;
       tasks[taskIndex].description=description;
@@ -133,6 +134,9 @@ const updates=(taskIndex)=>{
    saveTasks();
    renderTasks(tasks);
    taskForm.reset();
+  }else{
+    alert("Please first fill out form for update task");
+  }
 }
 const updateTask=(taskId,updates)=>{
   const taskIndex = tasks.findIndex((task) => task.id === taskId);
@@ -141,7 +145,7 @@ const updateTask=(taskId,updates)=>{
     console.error(`Task with ID ${taskId} not found.`);
     return;
   }else{
-      updates(taskIndex);
+      updates(taskIndex); // here i use callback
   }
 }
 
@@ -152,7 +156,7 @@ const filterTasks = () => {
   const filteredTasks = tasks.filter((task) => {
     if (filterValue === 'completed') return task.completed;
     if (filterValue === 'incomplete') return !task.completed;
-    return true; // 'all'
+    return true; // 'for all task'
   });
 
   renderTasks(filteredTasks);
@@ -168,11 +172,11 @@ const sortTasks = () => {
   if (sortValue === 'priority') {
     tasks.sort((a, b) => {
       const priorityOrder = { low: 1, medium: 2, high: 3 };
-      return priorityOrder[b.priority] - priorityOrder[a.priority];
+      return priorityOrder[b.priority] - priorityOrder[a.priority];//for desending order
     }); 
 
   } else if (sortValue === 'dueDate') {
-    tasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+    tasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));//for asending order
   }
 
   renderTasks(tasks);
